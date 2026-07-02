@@ -1,0 +1,7 @@
+﻿services:
+  testtodo.api:
+    image: testtodo.api
+    build:
+      context: .
+      dockerfile: TestToDo.Api/Dockerfile
+
