@@ -52,7 +52,7 @@ public partial class ToDoItem
     public void Reopen()
     {
         if (!IsCompleted) return;
-        IsCompleted = true;
+        IsCompleted = false;
         CompletedAt = null;
     }
 }
