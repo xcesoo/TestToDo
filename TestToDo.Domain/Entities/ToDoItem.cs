@@ -13,5 +13,7 @@ public partial class ToDoItem
     public DateTime? Deadline { get; private set; }
     public EPriority Priority { get; private set; }
     
+    public bool IsCompleted { get; private set; }
+    public DateTime? CompletedAt { get; private set; } 
     private ToDoItem(){} // for ef core
 }

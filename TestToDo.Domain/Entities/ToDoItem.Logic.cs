@@ -26,7 +26,8 @@ public partial class ToDoItem
             Category = category,
             CreatedAt = DateTime.UtcNow,
             Deadline = deadline,
-            Priority = priority
+            Priority = priority,
+            IsCompleted =  false
         };
     }
 
@@ -40,4 +41,18 @@ public partial class ToDoItem
         CategoryId = category.Id;
     }
     public void ChangePriority(EPriority priority) => Priority =  priority;
+
+    public void Complete()
+    {
+        if (IsCompleted) return;
+        IsCompleted = true;
+        CompletedAt =  DateTime.UtcNow;
+    }
+
+    public void Reopen()
+    {
+        if (!IsCompleted) return;
+        IsCompleted = true;
+        CompletedAt = null;
+    }
 }
