@@ -21,4 +21,10 @@
       <Folder Include="Controllers\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\TestToDo.Application\TestToDo.Application.csproj" />
+      <ProjectReference Include="..\TestToDo.Domain\TestToDo.Domain.csproj" />
+      <ProjectReference Include="..\TestToDo.Infrastructure\TestToDo.Infrastructure.csproj" />
+    </ItemGroup>
+
 </Project>
