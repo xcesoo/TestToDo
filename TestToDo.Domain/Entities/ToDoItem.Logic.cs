@@ -7,9 +7,9 @@ public partial class ToDoItem
     // static factory
     public static ToDoItem Create(
         string title, 
-        Category? category =  null, 
+        Category? category = null, 
         DateTime? deadline = null,
-        string description = "",
+        string? description = "",
         EPriority priority = EPriority.Medium)
     {
         if (string.IsNullOrWhiteSpace(title))

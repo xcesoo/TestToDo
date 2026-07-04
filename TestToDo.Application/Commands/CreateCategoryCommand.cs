@@ -1,0 +1,6 @@
+using MediatR;
+using TestToDo.Application.DTOs;
+
+namespace TestToDo.Application.Commands;
+
+public record CreateCategoryCommand(string Name) : IRequest<CategoryDto>;
