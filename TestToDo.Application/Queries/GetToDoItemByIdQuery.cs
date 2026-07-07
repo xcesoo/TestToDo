@@ -1,3 +1,6 @@
+using MediatR;
+using TestToDo.Application.DTOs;
+
 namespace TestToDo.Application.Queries;
 
-public record GetToDoItemByIdQuery;
+public record GetToDoItemByIdQuery (Guid Id) : IRequest<ToDoItemDto>;

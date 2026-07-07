@@ -7,7 +7,7 @@ namespace TestToDo.Application.Commands;
 public record CreateToDoItemCommand(
     string Title,
     string? Description,
-    string? Category,
     DateTime? Deadline,
-    EPriority Priority
+    EPriority? Priority,
+    Guid CategoryId
     ) : IRequest<ToDoItemDto>;
