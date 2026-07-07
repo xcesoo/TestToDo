@@ -4,9 +4,9 @@ namespace TestToDo.Interfaces;
 
 public interface ICategoryRepository
 {
-    Task<IEnumerable<Category>> GetCategories();
-    Task<Category> GetCategoryById(int id);
-    Task<Category> AddCategory(Category category);
-    Task<Category> UpdateCategory(Category category);
-    Task DeleteCategory(int id);
+    Task<IReadOnlyCollection<Category>> GetCategories(CancellationToken cancellationToken);
+    Task<Category?> GetCategoryById(Guid id, CancellationToken cancellationToken);
+    Task AddCategory(Category category, CancellationToken cancellationToken);
+    Task DeleteCategory(Guid id, CancellationToken cancellationToken);
+    Task SaveChangesAsync(CancellationToken cancellationToken);
 }
