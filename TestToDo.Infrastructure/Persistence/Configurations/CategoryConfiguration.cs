@@ -20,5 +20,11 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
             .HasMaxLength(50)
             .IsRequired()
             .HasColumnName("name");
+
+        builder.HasData(new
+        {
+            Id = Guid.Empty,
+            Name = "Default"
+        });
     }
 }
