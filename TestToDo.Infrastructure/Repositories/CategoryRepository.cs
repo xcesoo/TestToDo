@@ -19,7 +19,7 @@ public class CategoryRepository : ICategoryRepository
         return await _context.Categories.AsNoTracking().ToListAsync(cancellationToken);
     }
 
-    public async Task<Category?> GetCategoryById(Guid id,CancellationToken cancellationToken)
+    public async Task<Category?> GetCategoryById(Guid? id, CancellationToken cancellationToken)
     {
         return await _context.Categories.Where(c=>c.Id==id).FirstOrDefaultAsync(cancellationToken);
     }
