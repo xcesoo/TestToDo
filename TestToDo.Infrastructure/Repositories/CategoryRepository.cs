@@ -21,8 +21,7 @@ public class CategoryRepository : ICategoryRepository
 
     public async Task<Category?> GetCategoryById(Guid id,CancellationToken cancellationToken)
     {
-        return await _context.Categories.Where(c=>c.Id==id).FirstOrDefaultAsync(cancellationToken)
-            ?? throw new KeyNotFoundException();;
+        return await _context.Categories.Where(c=>c.Id==id).FirstOrDefaultAsync(cancellationToken);
     }
 
     public async Task AddCategory(Category category, CancellationToken cancellationToken)
