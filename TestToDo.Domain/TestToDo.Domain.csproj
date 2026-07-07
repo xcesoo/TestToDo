@@ -7,8 +7,4 @@
         <RootNamespace>TestToDo</RootNamespace>
     </PropertyGroup>
 
-    <ItemGroup>
-      <Folder Include="ValueObjects\" />
-    </ItemGroup>
-
 </Project>
