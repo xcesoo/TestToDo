@@ -20,7 +20,9 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
             .HasMaxLength(50)
             .IsRequired()
             .HasColumnName("name");
-
+        builder.HasIndex(c => c.Name)
+            .HasMethod("gin")
+            .HasOperators("gin_trgm_ops");
         builder.HasData(new
         {
             Id = Guid.Empty,

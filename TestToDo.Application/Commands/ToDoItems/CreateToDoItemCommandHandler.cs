@@ -5,7 +5,7 @@ using TestToDo.Entities;
 using TestToDo.Enums;
 using TestToDo.Interfaces;
 
-namespace TestToDo.Application.Commands;
+namespace TestToDo.Application.Commands.ToDoItems;
 
 public class CreateToDoItemCommandHandler(IToDoItemRepository itemRepository, ICategoryRepository categoryRepository) : IRequestHandler<CreateToDoItemCommand, ToDoItemDto>
 {

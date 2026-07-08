@@ -2,7 +2,7 @@ using MediatR;
 using TestToDo.Application.DTOs;
 using TestToDo.Enums;
 
-namespace TestToDo.Application.Commands;
+namespace TestToDo.Application.Commands.ToDoItems;
 
 public record CreateToDoItemCommand(
     string Title,

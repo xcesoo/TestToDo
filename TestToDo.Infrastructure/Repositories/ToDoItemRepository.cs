@@ -21,9 +21,8 @@ public class ToDoItemRepository : IToDoItemRepository
 
     public async Task<ToDoItem?> GetToDoItemById(Guid id, CancellationToken cancellationToken)
     {
-        return await 
-            _context.ToDoItems.Where(i => i.Id == id).FirstOrDefaultAsync(cancellationToken)
-            ?? throw new KeyNotFoundException();;
+        return await
+            _context.ToDoItems.Where(i => i.Id == id).FirstOrDefaultAsync(cancellationToken);
     }
     public async Task AddToDoItem(ToDoItem toDoItem, CancellationToken cancellationToken)
     {
