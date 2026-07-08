@@ -10,7 +10,7 @@ public class GetCategoryByNameQueryHandler(ICategoryRepository categoryRepositor
 {
     public async Task<IReadOnlyCollection<CategoryDto>> Handle(GetCategoryByNameQuery request, CancellationToken cancellationToken)
     {
-        var ct = await categoryRepository.GetCategoryByName(request.CategoryName, cancellationToken);
+        var ct = await categoryRepository.SearchCategoriesByName(request.CategoryName, cancellationToken);
         return ct.ToDtoCollection();
     }
 }
