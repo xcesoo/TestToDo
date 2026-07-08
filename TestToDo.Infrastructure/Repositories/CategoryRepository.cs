@@ -24,6 +24,11 @@ public class CategoryRepository : ICategoryRepository
         return await _context.Categories.Where(c=>c.Id==id).FirstOrDefaultAsync(cancellationToken);
     }
 
+    public async Task<IReadOnlyCollection<Category>> GetCategoryByName(string categoryName, CancellationToken cancellationToken)
+    {
+        return await _context.Categories.Where(c=>c.Name.Contains(categoryName)).ToListAsync(cancellationToken);
+    }
+
     public async Task AddCategory(Category category, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(category);
