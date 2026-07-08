@@ -4,7 +4,7 @@ using TestToDo.Application.Mappings;
 using TestToDo.Entities;
 using TestToDo.Interfaces;
 
-namespace TestToDo.Application.Commands;
+namespace TestToDo.Application.Commands.Categories;
 
 public class CreateCategoryCommandHandler(ICategoryRepository categoryRepository) : IRequestHandler<CreateCategoryCommand, CategoryDto>
 {
