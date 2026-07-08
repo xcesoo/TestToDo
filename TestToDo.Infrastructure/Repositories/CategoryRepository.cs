@@ -26,7 +26,7 @@ public class CategoryRepository : ICategoryRepository
 
     public async Task<IReadOnlyCollection<Category>> SearchCategoriesByName(string categoryName, CancellationToken cancellationToken)
     {
-        return await _context.Categories.Where(c=>c.Name.Contains(categoryName)).ToListAsync(cancellationToken);
+        return await _context.Categories.AsNoTracking().Where(c=>c.Name.Contains(categoryName)).ToListAsync(cancellationToken);
     }
 
     public async Task<Category?> GetCategoryByName(string categoryName, CancellationToken cancellationToken)
