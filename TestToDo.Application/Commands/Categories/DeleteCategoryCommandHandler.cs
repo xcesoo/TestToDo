@@ -7,6 +7,7 @@ public class DeleteCategoryCommandHandler(ICategoryRepository categoryRepository
 {
     public async Task Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
     {
+        if(request.CategoryId == Guid.Empty) throw new InvalidOperationException($"Default category cannot be deleted");
         await categoryRepository.DeleteCategory(request.CategoryId, cancellationToken);
     }
 }
