@@ -24,4 +24,6 @@ public class Category
             Name = "Default"
         };
     }
+    
+    public void ChangeName(string name) => Name = name;
 }
