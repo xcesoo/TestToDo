@@ -31,7 +31,7 @@ public class CategoriesController(IMediator mediator) : ControllerBase
     public async Task<ActionResult<IReadOnlyCollection<CategoryDto>>> SearchByName([FromQuery]string name,
         CancellationToken cancellationToken)
     {
-        var ct = await mediator.Send(new GetCategoryByNameQuery(name), cancellationToken);
+        var ct = await mediator.Send(new SearchCategoriesByNameQuery(name), cancellationToken);
         return Ok(ct);
     }
 }
