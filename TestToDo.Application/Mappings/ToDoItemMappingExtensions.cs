@@ -18,4 +18,9 @@ public static class ToDoItemMappingExtensions
             IsCompleted: item.IsCompleted
             );
     }
+
+    public static IReadOnlyCollection<ToDoItemDto> ToDtoCollection(this IEnumerable<ToDoItem> items)
+    {
+        return items.Select(i=> i.ToDto()).ToArray();
+    }
 }
