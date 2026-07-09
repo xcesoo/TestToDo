@@ -16,7 +16,7 @@ public class ToDoItemsController(IMediator mediator) : ControllerBase
     public async Task<ActionResult<ToDoItemDto>> GetById(Guid id, CancellationToken cancellationToken)
     {
         var item = await mediator.Send(new GetToDoItemByIdQuery(id), cancellationToken);
-        return Ok(item);
+        return item is null ? NotFound() : Ok(item);
     }
 
     [HttpPost]

@@ -16,7 +16,7 @@ public class CategoriesController(IMediator mediator) : ControllerBase
     public async Task<ActionResult<CategoryDto>> GetById(Guid id, CancellationToken cancellationToken)
     {
         var ct = await mediator.Send(new GetCategoryByIdQuery(id), cancellationToken);
-        return Ok(ct);
+        return ct is null ? NotFound() : Ok(ct);
     }
     
     [HttpPost]
