@@ -9,7 +9,7 @@ public partial class ToDoItem
         string title, 
         Category? category = null, 
         DateTime? deadline = null,
-        string? description = "",
+        string? description = null,
         EPriority priority = EPriority.Medium)
     {
         if (string.IsNullOrWhiteSpace(title))
