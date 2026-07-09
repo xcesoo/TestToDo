@@ -3,4 +3,4 @@ using TestToDo.Application.DTOs;
 
 namespace TestToDo.Application.Commands.Categories;
 
-public record CreateCategoryCommand(string CategoryName) : IRequest<CategoryDto>;
+public readonly record struct CreateCategoryCommand(string CategoryName) : IRequest<CategoryDto>;

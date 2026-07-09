@@ -4,7 +4,7 @@ using TestToDo.Enums;
 
 namespace TestToDo.Application.Commands.ToDoItems;
 
-public record CreateToDoItemCommand(
+public readonly record struct CreateToDoItemCommand(
     string Title,
     string? Description,
     DateTime? Deadline,
