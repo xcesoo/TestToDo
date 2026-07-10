@@ -22,7 +22,9 @@ public static class DependencyInjection
         });
         services.AddScoped<IToDoItemRepository, ToDoItemRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
         services.AddAuth(configuration);
+        services.AddScoped<ICurrentUserProvider, CurrentUserProvider>();
         return services;
     }
 

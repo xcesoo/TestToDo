@@ -18,6 +18,8 @@ builder.Services.AddControllers();
 builder.Services.AddSwaggerConfiguration();
 
 
+builder.Services.AddHttpContextAccessor();
+
 var app = builder.Build();
 
 app.UseSwaggerUi();
