@@ -9,6 +9,7 @@ public class ToDoContext : DbContext
     public DbSet<ToDoItem>  ToDoItems { get; set; }
     public DbSet<Category> Categories { get; set; }
     
+    public DbSet<User> Users { get; set; }
     public ToDoContext(DbContextOptions<ToDoContext> options) : base(options) {}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
