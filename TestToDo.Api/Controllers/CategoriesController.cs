@@ -28,8 +28,8 @@ public class CategoriesController(IMediator mediator) : ControllerBase
         return Ok(ct);
     }
 
-    [HttpGet]
-    public async Task<ActionResult<CategoryDto>> SearchByCategory([FromQuery] string name, CancellationToken cancellationToken)
+    [HttpGet("{name}")]
+    public async Task<ActionResult<CategoryDto>> SearchByCategory(string name, CancellationToken cancellationToken)
     {
         var ct = await mediator.Send(new GetCategoryByNameQuery(name), cancellationToken);
         return ct is null ? NotFound() : Ok(ct);

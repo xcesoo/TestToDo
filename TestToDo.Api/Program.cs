@@ -1,3 +1,4 @@
+using TestToDo.Api.Extensions;
 using TestToDo.Api.Middlewares;
 using TestToDo.Application;
 using TestToDo.Infrastructure;
@@ -14,14 +15,12 @@ builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddControllers();
 
-builder.Services.AddOpenApi();
+builder.Services.AddSwaggerConfiguration();
+
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
+app.UseSwaggerUi();
 
 app.UseHttpsRedirection();
 
