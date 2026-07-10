@@ -10,9 +10,9 @@ public static class ToDoItemMappingExtensions
         return new ToDoItemDto(
             Id: item.Id,
             Title: item.Title,
-            Description: item.Description ?? "",
-            Category: item.Category.Name,
-            CreatedAt: item.CreatedAt,
+            Description: item?.Description,
+            Category: item?.Category?.Name,
+            CreatedAt: item!.CreatedAt,
             Deadline: item.Deadline,
             Priority: item.Priority,
             IsCompleted: item.IsCompleted

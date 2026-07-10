@@ -6,23 +6,22 @@ public partial class ToDoItem
 {
     // static factory
     public static ToDoItem Create(
-        string title, 
+        string title,
+        Guid userId,
         Category? category = null, 
         DateTime? deadline = null,
         string? description = null,
         EPriority priority = EPriority.Medium)
     {
-        if (string.IsNullOrWhiteSpace(title))
-            throw new ArgumentNullException($"Title cannot be null or empty", nameof(title));
-
-        category ??= Category.Default();
+        ArgumentException.ThrowIfNullOrWhiteSpace(title);
         
         return new ToDoItem
         {
             Id = Guid.CreateVersion7(),
+            UserId =  userId,
             Title = title,
             Description = description,
-            CategoryId = category.Id,
+            CategoryId = category?.Id,
             Category = category,
             CreatedAt = DateTime.UtcNow,
             Deadline = deadline,
@@ -35,10 +34,10 @@ public partial class ToDoItem
     public void ChangeTitle(string title) => Title =  title;
     public void ChangeDescription (string description)=> Description = description;
 
-    public void ChangeCategory(Category category)
+    public void ChangeCategory(Category? category)
     {
         Category = category;
-        CategoryId = category.Id;
+        CategoryId = category?.Id;
     }
     public void ChangePriority(EPriority priority) => Priority =  priority;
 

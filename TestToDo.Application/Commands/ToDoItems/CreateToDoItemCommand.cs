@@ -9,5 +9,5 @@ public readonly record struct CreateToDoItemCommand(
     string? Description,
     DateTime? Deadline,
     EPriority? Priority,
-    Guid CategoryId
+    Guid? CategoryId
     ) : IRequest<ToDoItemDto>;

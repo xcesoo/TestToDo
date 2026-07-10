@@ -1,3 +1,3 @@
 namespace TestToDo.Application.DTOs;
 
-public record CategoryDto(Guid Id, string Name);
+public record CategoryDto(Guid? Id, string? Name);

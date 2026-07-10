@@ -23,10 +23,16 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
         builder.HasIndex(c => c.Name)
             .HasMethod("gin")
             .HasOperators("gin_trgm_ops");
-        builder.HasData(new
-        {
-            Id = Guid.Empty,
-            Name = "Default"
-        });
+
+        builder.Property(c => c.UserId)
+            .IsRequired()
+            .HasColumnName("user_id");
+        
+        builder.HasOne<User>()
+            .WithMany()
+            .HasForeignKey(c => c.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        builder.HasIndex(c => new {c.UserId, c.Name}).IsUnique();
     }
 }

@@ -13,7 +13,7 @@ public class CreateCategoryCommandHandler(ICategoryRepository categoryRepository
         var c = await categoryRepository.GetCategoryByNameAsync(request.CategoryName, cancellationToken);
         if (c != null) throw new ArgumentException($"Category with name {request.CategoryName} already exists");
         
-        c = Category.Create(request.CategoryName);
+        c = Category.Create(request.CategoryName, Guid.Empty ); //TODO USE IDENTITY
         await categoryRepository.AddCategoryAsync(c, cancellationToken);
         await categoryRepository.SaveChangesAsync(cancellationToken);
         return c.ToDto();

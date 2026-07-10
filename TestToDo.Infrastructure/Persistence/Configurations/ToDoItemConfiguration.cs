@@ -27,13 +27,25 @@ public class ToDoItemConfiguration : IEntityTypeConfiguration<ToDoItem>
             .HasColumnName("description");
         
         builder.Property(c => c.CategoryId)
-            .IsRequired()
+            .IsRequired(false)
             .HasColumnName("category_id");
         
         builder.HasOne(c => c.Category)
             .WithMany()
+            .IsRequired(false)
             .HasForeignKey(c => c.CategoryId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.SetNull);
+        
+        builder.Property(c => c.UserId)
+            .IsRequired()
+            .HasColumnName("user_id");
+        
+        builder.HasOne<User>()
+            .WithMany()
+            .HasForeignKey(c => c.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        builder.HasIndex(c => new { c.UserId, c.CategoryId });
 
         builder.Property(c => c.CreatedAt)
             .IsRequired()

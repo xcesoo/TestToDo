@@ -14,6 +14,7 @@ public class CreateToDoItemCommandHandler(IToDoItemRepository itemRepository, IC
         var ct = await categoryRepository.GetCategoryByIdAsync(request.CategoryId,cancellationToken);
         var item = ToDoItem.Create(
             title: request.Title,
+            userId: Guid.Empty, //TODO USE IDENTITY
             category: ct,
             deadline: request.Deadline,
             description: request.Description ?? null,
