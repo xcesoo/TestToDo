@@ -10,11 +10,11 @@ public class CreateCategoryCommandHandler(ICategoryRepository categoryRepository
 {
     public async Task<CategoryDto> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
     {
-        var c = await categoryRepository.GetCategoryByName(request.CategoryName, cancellationToken);
+        var c = await categoryRepository.GetCategoryByNameAsync(request.CategoryName, cancellationToken);
         if (c != null) throw new ArgumentException($"Category with name {request.CategoryName} already exists");
         
         c = Category.Create(request.CategoryName);
-        await categoryRepository.AddCategory(c, cancellationToken);
+        await categoryRepository.AddCategoryAsync(c, cancellationToken);
         await categoryRepository.SaveChangesAsync(cancellationToken);
         return c.ToDto();
     }

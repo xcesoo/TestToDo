@@ -11,14 +11,14 @@ public class CreateToDoItemCommandHandler(IToDoItemRepository itemRepository, IC
 {
     public async Task<ToDoItemDto> Handle(CreateToDoItemCommand request, CancellationToken cancellationToken)
     {
-        var ct = await categoryRepository.GetCategoryById(request.CategoryId,cancellationToken);
+        var ct = await categoryRepository.GetCategoryByIdAsync(request.CategoryId,cancellationToken);
         var item = ToDoItem.Create(
             title: request.Title,
             category: ct,
             deadline: request.Deadline,
             description: request.Description ?? null,
             priority: request.Priority ?? EPriority.Medium);
-        await itemRepository.AddToDoItem(item, cancellationToken);
+        await itemRepository.AddToDoItemAsync(item, cancellationToken);
         await itemRepository.SaveChangesAsync(cancellationToken);
         return item.ToDto();
     }

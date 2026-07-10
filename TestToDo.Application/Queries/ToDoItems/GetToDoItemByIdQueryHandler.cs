@@ -9,7 +9,7 @@ public class GetToDoItemByIdQueryHandler(IToDoItemRepository itemRepository) : I
 {
     public async Task<ToDoItemDto?> Handle(GetToDoItemByIdQuery request, CancellationToken cancellationToken)
     {
-        var item = await itemRepository.GetToDoItemById(request.Id, cancellationToken);
+        var item = await itemRepository.GetToDoItemByIdAsync(request.Id, cancellationToken);
         return item?.ToDto();
     }
 }

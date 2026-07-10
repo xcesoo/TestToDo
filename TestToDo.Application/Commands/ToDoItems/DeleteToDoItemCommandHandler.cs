@@ -7,6 +7,6 @@ public class DeleteToDoItemCommandHandler(IToDoItemRepository itemRepository) : 
 {
     public async Task Handle(DeleteToDoItemCommand request, CancellationToken cancellationToken)
     {
-        await itemRepository.DeleteToDoItem(request.ToDoItemId, cancellationToken);
+        await itemRepository.DeleteToDoItemAsync(request.ToDoItemId, cancellationToken);
     }
 }

@@ -10,7 +10,7 @@ public class GetAllToDoItemsQueryHandler(IToDoItemRepository itemRepository) : I
 {
     public async Task<IReadOnlyCollection<ToDoItemDto>> Handle(GetAllToDoItemsQuery request, CancellationToken cancellationToken)
     {
-        var i = await itemRepository.GetToDoItems(cancellationToken);
+        var i = await itemRepository.GetToDoItemsAsync(cancellationToken);
         return i.ToDtoCollection();
     }
 };

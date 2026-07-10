@@ -14,23 +14,23 @@ public class ToDoItemRepository : IToDoItemRepository
         _context = context ?? throw new ArgumentNullException(nameof(context));
     }
     
-    public async Task<IReadOnlyCollection<ToDoItem>> GetToDoItems(CancellationToken cancellationToken)
+    public async Task<IReadOnlyCollection<ToDoItem>> GetToDoItemsAsync(CancellationToken cancellationToken)
     {
         return await _context.ToDoItems.AsNoTracking().ToListAsync(cancellationToken);
     }
 
-    public async Task<ToDoItem?> GetToDoItemById(Guid id, CancellationToken cancellationToken)
+    public async Task<ToDoItem?> GetToDoItemByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         return await
             _context.ToDoItems.Where(i => i.Id == id).FirstOrDefaultAsync(cancellationToken);
     }
-    public async Task AddToDoItem(ToDoItem toDoItem, CancellationToken cancellationToken)
+    public async Task AddToDoItemAsync(ToDoItem toDoItem, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(toDoItem);
         await _context.ToDoItems.AddAsync(toDoItem, cancellationToken);
     }
     
-    public async Task DeleteToDoItem(Guid id, CancellationToken cancellationToken)
+    public async Task DeleteToDoItemAsync(Guid id, CancellationToken cancellationToken)
     {
         await _context.ToDoItems.Where(i => i.Id == id).ExecuteDeleteAsync(cancellationToken);
     }

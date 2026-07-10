@@ -7,7 +7,7 @@ public class ChangePriorityToDoItemCommandHandler(IToDoItemRepository itemReposi
 {
     public async Task Handle(ChangePriorityToDoItemCommand request, CancellationToken cancellationToken)
     {
-        var i = await itemRepository.GetToDoItemById(request.ToDoItemId, cancellationToken)
+        var i = await itemRepository.GetToDoItemByIdAsync(request.ToDoItemId, cancellationToken)
                 ?? throw new KeyNotFoundException($"ToDoItem with id {request.ToDoItemId} not found");
         i.ChangePriority(request.NewPriority);
         await itemRepository.SaveChangesAsync(cancellationToken);

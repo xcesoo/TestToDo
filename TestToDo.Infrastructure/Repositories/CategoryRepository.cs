@@ -14,33 +14,33 @@ public class CategoryRepository : ICategoryRepository
         _context = context;
     }
 
-    public async Task<IReadOnlyCollection<Category>> GetCategories(CancellationToken cancellationToken)
+    public async Task<IReadOnlyCollection<Category>> GetCategoriesAsync(CancellationToken cancellationToken)
     {
         return await _context.Categories.AsNoTracking().ToListAsync(cancellationToken);
     }
 
-    public async Task<Category?> GetCategoryById(Guid? id, CancellationToken cancellationToken)
+    public async Task<Category?> GetCategoryByIdAsync(Guid? id, CancellationToken cancellationToken)
     {
         return await _context.Categories.Where(c=>c.Id==id).FirstOrDefaultAsync(cancellationToken);
     }
 
-    public async Task<IReadOnlyCollection<Category>> SearchCategoriesByName(string categoryName, CancellationToken cancellationToken)
+    public async Task<IReadOnlyCollection<Category>> SearchCategoriesByNameAsync(string categoryName, CancellationToken cancellationToken)
     {
         return await _context.Categories.AsNoTracking().Where(c=>EF.Functions.ILike(c.Name, $"%{categoryName}%")).ToListAsync(cancellationToken);
     }
 
-    public async Task<Category?> GetCategoryByName(string categoryName, CancellationToken cancellationToken)
+    public async Task<Category?> GetCategoryByNameAsync(string categoryName, CancellationToken cancellationToken)
     {
         return await _context.Categories.Where(c=>c.Name==categoryName).FirstOrDefaultAsync(cancellationToken);
     }
 
-    public async Task AddCategory(Category category, CancellationToken cancellationToken)
+    public async Task AddCategoryAsync(Category category, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(category);
         await _context.Categories.AddAsync(category, cancellationToken);
     }
 
-    public async Task DeleteCategory(Guid id, CancellationToken cancellationToken)
+    public async Task DeleteCategoryAsync(Guid id, CancellationToken cancellationToken)
     {
         await _context.Categories.Where(c=>c.Id ==id).ExecuteDeleteAsync(cancellationToken);
     }

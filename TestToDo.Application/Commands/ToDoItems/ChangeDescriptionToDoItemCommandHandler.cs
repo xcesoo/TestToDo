@@ -7,7 +7,7 @@ public class ChangeDescriptionToDoItemCommandHandler(IToDoItemRepository itemRep
 {
     public async Task Handle(ChangeDescriptionToDoItemCommand request, CancellationToken cancellationToken)
     {
-        var i = await itemRepository.GetToDoItemById(request.ToDoItemId, cancellationToken)
+        var i = await itemRepository.GetToDoItemByIdAsync(request.ToDoItemId, cancellationToken)
                 ?? throw new KeyNotFoundException($"ToDoItem with id {request.ToDoItemId} not found");
         i.ChangeDescription(request.NewDescription);
         await itemRepository.SaveChangesAsync(cancellationToken);

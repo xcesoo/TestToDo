@@ -11,7 +11,7 @@ public class GetAllCategoriesQueryHandler(ICategoryRepository categoryRepository
     public async Task<IReadOnlyCollection<CategoryDto>> Handle(GetAllCategoriesQuery request,
         CancellationToken cancellationToken)
     {
-        var ct = await categoryRepository.GetCategories(cancellationToken);
+        var ct = await categoryRepository.GetCategoriesAsync(cancellationToken);
         return ct.ToDtoCollection();
     }
 }
