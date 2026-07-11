@@ -1,5 +1,6 @@
 using MediatR;
+using TestToDo.Application.DTOs;
 
 namespace TestToDo.Application.Commands.Users;
 
-public readonly record struct ChangeUserPasswordCommand(string Password) : IRequest;
+public readonly record struct ChangeUserPasswordCommand(string CurrentPassword, string NewPassword) : IRequest<TokenResponseDto>;

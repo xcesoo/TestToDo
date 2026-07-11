@@ -1,11 +1,13 @@
 using MediatR;
+using TestToDo.Application.Interfaces;
+using TestToDo.Interfaces;
 
 namespace TestToDo.Application.Commands.Users;
 
-public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand>
+public class DeleteUserCommandHandler(ICurrentUserProvider currentUser, IUserRepository userRepository) : IRequestHandler<DeleteUserCommand>
 {
-    public Task Handle(DeleteUserCommand request, CancellationToken cancellationToken)
+    public async Task Handle(DeleteUserCommand request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        await userRepository.DeleteUserAsync(currentUser.GetUserId(), cancellationToken);
     }
 }

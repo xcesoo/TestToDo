@@ -1,11 +1,25 @@
 using MediatR;
+using TestToDo.Application.DTOs;
+using TestToDo.Application.Interfaces;
+using TestToDo.Interfaces;
 
 namespace TestToDo.Application.Commands.Users;
 
-public class ChangeUserPasswordCommandHandler : IRequestHandler<ChangeUserPasswordCommand>
+public class ChangeUserPasswordCommandHandler(
+    ICurrentUserProvider currentUser,
+    IUserRepository userRepository,
+    IPasswordHasher passwordHasher,
+    IJwtProvider jwtProvider) : IRequestHandler<ChangeUserPasswordCommand, TokenResponseDto>
 {
-    public Task Handle(ChangeUserPasswordCommand request, CancellationToken cancellationToken)
+    public async Task<TokenResponseDto> Handle(ChangeUserPasswordCommand request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var user = await userRepository.GetUserByIdAsync(currentUser.GetUserId(), cancellationToken)
+                   ?? throw new KeyNotFoundException("User not found");
+        if (!passwordHasher.Verify(request.CurrentPassword, user.PasswordHash)) throw new ArgumentException("Current password does not match");
+        user.ChangePasswordHash(passwordHasher.Hash(request.NewPassword));
+        var token = new TokenResponseDto(jwtProvider.GenerateAccessJwtToken(user), jwtProvider.GenerateRefreshJwtToken(user));
+        //todo save refresh
+        await userRepository.SaveChangesAsync(cancellationToken);
+        return token;
     }
 }
