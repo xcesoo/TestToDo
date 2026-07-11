@@ -17,7 +17,7 @@ public class RegisterUserCommandHandler(
         if(existUser != null) throw new ArgumentException("User with email already exist", request.Email);
         var user = User.Create(request.Email, passwordHasher.Hash(request.Password), request.Name);
         var token = new TokenResponseDto(jwtProvider.GenerateAccessJwtToken(user), jwtProvider.GenerateRefreshJwtToken(user));
-        //todo save refresh
+        user.AddRefreshToken(token.RefreshToken);
         await userRepository.AddUserAsync(user, cancellationToken);
         await userRepository.SaveChangesAsync(cancellationToken);
         return token;

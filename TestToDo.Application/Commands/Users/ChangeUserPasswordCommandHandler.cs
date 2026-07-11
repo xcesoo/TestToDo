@@ -18,7 +18,8 @@ public class ChangeUserPasswordCommandHandler(
         if (!passwordHasher.Verify(request.CurrentPassword, user.PasswordHash)) throw new ArgumentException("Current password does not match");
         user.ChangePasswordHash(passwordHasher.Hash(request.NewPassword));
         var token = new TokenResponseDto(jwtProvider.GenerateAccessJwtToken(user), jwtProvider.GenerateRefreshJwtToken(user));
-        //todo save refresh
+        user.RevokeAllRefreshTokens();
+        user.AddRefreshToken(token.RefreshToken);
         await userRepository.SaveChangesAsync(cancellationToken);
         return token;
     }
