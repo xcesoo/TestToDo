@@ -34,5 +34,14 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(c => c.CreatedAt)
             .IsRequired()
             .HasColumnName("created_at");
+        
+        builder.HasMany(u => u.RefreshTokens)
+            .WithOne(r => r.User)
+            .HasForeignKey(r => r.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        builder.Navigation(u => u.RefreshTokens)
+            .UsePropertyAccessMode(PropertyAccessMode.Field)
+            .AutoInclude();
     }
 }

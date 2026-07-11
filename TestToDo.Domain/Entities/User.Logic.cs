@@ -17,6 +17,29 @@ public partial class User
         };
     }
 
+    public void AddRefreshToken(string token)
+    {
+        _refreshTokens.RemoveAll(t => !t.IsActive);
+        if (_refreshTokens.Count >= 5)
+        {
+            var oldest = _refreshTokens.OrderBy(t => t.CreatedDate).First();
+            _refreshTokens.Remove(oldest);
+        }
+
+        _refreshTokens.Add(RefreshToken.Create(token, Id));
+}
+
+    public void RevokeRefreshToken(string refreshToken)
+    {
+        _refreshTokens.FirstOrDefault(t=> t.Token == refreshToken)?.Revoke();
+    }
+
+    public void RevokeAllRefreshTokens()
+    {
+        foreach (var token in _refreshTokens) token.Revoke();
+    }
+    
+
     public void ChangeName(string newName)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(newName);
