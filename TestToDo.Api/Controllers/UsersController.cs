@@ -92,6 +92,21 @@ public class UsersController(IMediator mediator) : ControllerBase
         await mediator.Send(new DeleteUserCommand(), cancellationToken); 
         return NoContent();
     }
+    
+    [HttpDelete("logout")]
+    [Authorize]
+    public async Task<IActionResult> Logout([FromBody] LogoutUserRequest request, CancellationToken cancellationToken)
+    {
+        await mediator.Send(new LogoutUserCommand(request.RefreshToken), cancellationToken);
+        return NoContent();
+    }
+    [HttpDelete("logout/all")]
+    [Authorize]
+    public async Task<IActionResult> LogoutAll(CancellationToken cancellationToken)
+    {
+        await mediator.Send(new LogoutAllUserCommand(), cancellationToken);
+        return NoContent();
+    }
     //DELETE
 }
 
@@ -101,3 +116,4 @@ public readonly record struct RefreshTokenUserRequest(string RefreshToken);
 public readonly record struct ChangeEmailUserRequest(string Email);
 public readonly record struct ChangePasswordUserRequest(string CurrentPassword, string NewPassword);
 public readonly record struct ChangeNameUserRequest(string Name);
+public readonly record struct LogoutUserRequest(string RefreshToken);

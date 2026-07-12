@@ -76,7 +76,7 @@ public class ToDoItemsController(IMediator mediator) : ControllerBase
     [Authorize]
     public async Task<IActionResult> ChangeCategory(Guid id, CancellationToken cancellationToken)
     {
-        await mediator.Send(new ChangeCategoryToDoItemCommand(id, Guid.Empty), cancellationToken);
+        await mediator.Send(new ChangeCategoryToDoItemCommand(id, null), cancellationToken);
         return NoContent();
     }
     
