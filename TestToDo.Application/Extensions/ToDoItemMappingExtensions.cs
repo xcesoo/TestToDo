@@ -1,7 +1,7 @@
 using TestToDo.Application.DTOs;
 using TestToDo.Entities;
 
-namespace TestToDo.Application.Mappings;
+namespace TestToDo.Application.Extensions;
 
 public static class ToDoItemMappingExtensions
 {

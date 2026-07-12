@@ -28,11 +28,21 @@ public class ToDoItemsController(IMediator mediator) : ControllerBase
         return Ok(items);
     }
     
-    [HttpGet("/category")]
+    [HttpGet("search")]
     [Authorize]
-    public async Task<ActionResult<IReadOnlyCollection<ToDoItemDto>>> GetByCategory([FromQuery] Guid? categoryId, CancellationToken cancellationToken)
+    public async Task<ActionResult<IReadOnlyCollection<ToDoItemDto>>> Search([FromQuery] SearchToDoItemsRequest request, CancellationToken cancellationToken)
     {
-        var items = await mediator.Send(new GetToDoItemsByCategoryQuery(categoryId), cancellationToken);
+        var items = await mediator.Send(
+            new SearchToDoItemsQuery(
+                request.SearchTerm,
+                request.CategoryId,
+                request.Priority,
+                request.startDateCreated, request.endDateCreated,
+                request.startDateDeadline, request.endDateDeadline,
+                request.startDateCompleted, request.endDateCompleted,
+                request.completed,
+                request.Page, request.PageSize),
+            cancellationToken);
         return Ok(items);
     }
     //GET
@@ -129,4 +139,13 @@ public readonly record struct ChangeTitleRequest(string Title);
 public readonly record struct ChangeDescriptionRequest(string Description);
 public readonly record struct ChangePriorityRequest(EPriority Priority);
 public readonly record struct ChangeDeadlineRequest(DateTime Deadline);
+public readonly record struct SearchToDoItemsRequest(
+    string? SearchTerm, 
+    Guid? CategoryId,
+    EPriority[]? Priority,
+    DateTime? startDateCreated, DateTime? endDateCreated,
+    DateTime? startDateDeadline, DateTime? endDateDeadline,
+    DateTime? startDateCompleted, DateTime? endDateCompleted,
+    bool? completed,
+    int Page, int PageSize);
 //REQUESTS RECORDS

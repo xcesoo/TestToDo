@@ -1,7 +1,7 @@
 using MediatR;
 using TestToDo.Application.DTOs;
 using TestToDo.Application.Interfaces;
-using TestToDo.Application.Mappings;
+using TestToDo.Application.Extensions;
 using TestToDo.Interfaces;
 
 namespace TestToDo.Application.Queries.Categories;
