@@ -1,0 +1,93 @@
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using TestToDo.Application.Commands.Users;
+
+namespace TestToDo.Api.Controllers;
+[ApiController]
+[Route("api/[controller]")]
+public class UsersController(IMediator mediator) : ControllerBase
+{
+    //GET
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        throw new NotImplementedException();
+    }
+    
+    [HttpGet("{userId}")]
+    public async Task<IActionResult> GetById(Guid userId)
+    {
+        throw new NotImplementedException();
+    }
+    //GET
+
+    //POST
+    [HttpPost("register")]
+    [AllowAnonymous]
+    public async Task<IActionResult> Register([FromBody] RegisterUserRequest request, CancellationToken cancellationToken)
+    {
+        var t = await mediator.Send(new RegisterUserCommand(request.Email, request.Password, request.Name), cancellationToken); 
+        return Ok(t);
+    }
+
+    [HttpPost("login")]
+    [AllowAnonymous]
+    public async Task<IActionResult> Login([FromBody] LoginUserRequest request, CancellationToken cancellationToken)
+    {
+        var t = await mediator.Send(new LoginUserCommand(request.Email, request.Password), cancellationToken); 
+        return Ok(t);
+    }
+    
+    [HttpPost("token")]
+    [AllowAnonymous]
+    public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenUserRequest request, CancellationToken cancellationToken)
+    {
+        var t = await mediator.Send(new RefreshTokenUserCommand(request.RefreshToken), cancellationToken); 
+        return Ok(t);
+    }
+    //POST
+    
+    //PATCH
+    [HttpPatch("email")]
+    [Authorize]
+    public async Task<IActionResult> ChangeEmail([FromBody] ChangeEmailUserRequest request, CancellationToken cancellationToken)
+    { 
+        await mediator.Send(new ChangeUserEmailCommand(request.Email), cancellationToken);
+        return NoContent();
+    }
+    
+    [HttpPatch("password")]
+    [Authorize]
+    public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordUserRequest request, CancellationToken cancellationToken)
+    {
+        await mediator.Send(new ChangeUserPasswordCommand(request.CurrentPassword, request.NewPassword), cancellationToken); 
+        return NoContent();
+    }
+    
+    [HttpPatch("name")]
+    [Authorize]
+    public async Task<IActionResult> ChangeName([FromBody] ChangeNameUserRequest request, CancellationToken cancellationToken)
+    {
+        await mediator.Send(new ChangeUserNameCommand(request.Name), cancellationToken); 
+        return NoContent();
+    }
+    //PATCH
+    
+    //DELETE
+    [HttpDelete]
+    [Authorize]
+    public async Task<IActionResult> Delete(CancellationToken cancellationToken)
+    {
+        await mediator.Send(new DeleteUserCommand(), cancellationToken); 
+        return NoContent();
+    }
+    //DELETE
+}
+
+public readonly record struct RegisterUserRequest(string Email, string Password, string Name);
+public readonly record struct LoginUserRequest(string Email, string Password);
+public readonly record struct RefreshTokenUserRequest(string RefreshToken);
+public readonly record struct ChangeEmailUserRequest(string Email);
+public readonly record struct ChangePasswordUserRequest(string CurrentPassword, string NewPassword);
+public readonly record struct ChangeNameUserRequest(string Name);
