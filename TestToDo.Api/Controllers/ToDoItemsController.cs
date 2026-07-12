@@ -27,6 +27,14 @@ public class ToDoItemsController(IMediator mediator) : ControllerBase
         var items = await mediator.Send(new GetAllToDoItemsQuery(page, pageSize), cancellationToken);
         return Ok(items);
     }
+    
+    [HttpGet("/category")]
+    [Authorize]
+    public async Task<ActionResult<IReadOnlyCollection<ToDoItemDto>>> GetByCategory([FromQuery] Guid? categoryId, CancellationToken cancellationToken)
+    {
+        var items = await mediator.Send(new GetToDoItemsByCategoryQuery(categoryId), cancellationToken);
+        return Ok(items);
+    }
     //GET
 
     //POST

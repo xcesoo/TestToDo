@@ -25,6 +25,13 @@ public class ToDoItemRepository : IToDoItemRepository
             .ToListAsync(cancellationToken);
     }
 
+    public async Task<IReadOnlyCollection<ToDoItem>> GetToDoItemsByCategoryAsync(Guid? categoryId, Guid userId, CancellationToken cancellationToken)
+    {
+        return await _context.ToDoItems.AsNoTracking()
+            .Where(i => i.UserId == userId && i.CategoryId == categoryId)
+            .ToListAsync(cancellationToken);
+    }
+
     public async Task<ToDoItem?> GetToDoItemByIdAsync(Guid id, Guid userId,  CancellationToken cancellationToken)
     {
         return await
