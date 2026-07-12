@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TestToDo.Application.Commands.Users;
+using TestToDo.Application.Queries.Users;
 
 namespace TestToDo.Api.Controllers;
 [ApiController]
@@ -12,13 +13,22 @@ public class UsersController(IMediator mediator) : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        throw new NotImplementedException();
+        var user = await mediator.Send(new GetAllUsersQuery());
+        return Ok(user);
     }
     
     [HttpGet("{userId}")]
     public async Task<IActionResult> GetById(Guid userId)
     {
-        throw new NotImplementedException();
+        var user = await mediator.Send(new GetUserByIdQuery(userId));
+        return user is null ? NotFound() : Ok(user);
+    }
+    
+    [HttpGet]
+    public async Task<IActionResult> GetByEmail([FromQuery]string email)
+    {
+        var user = await mediator.Send(new GetUserByEmailQuery(email));
+        return user is null ? NotFound() : Ok(user);
     }
     //GET
 
