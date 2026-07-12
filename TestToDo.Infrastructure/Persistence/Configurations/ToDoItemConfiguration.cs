@@ -19,12 +19,18 @@ public class ToDoItemConfiguration : IEntityTypeConfiguration<ToDoItem>
             .HasMaxLength(100)
             .IsRequired()
             .HasColumnName("title");
+        builder.HasIndex(c => c.Title)
+            .HasMethod("gin")
+            .HasOperators("gin_trgm_ops");
         
         builder.Property(c => c.Description)
             .HasMaxLength(500)
             .IsRequired(false)
             .HasDefaultValue(null)
             .HasColumnName("description");
+        builder.HasIndex(c => c.Description)
+            .HasMethod("gin")
+            .HasOperators("gin_trgm_ops");
         
         builder.Property(c => c.CategoryId)
             .IsRequired(false)
