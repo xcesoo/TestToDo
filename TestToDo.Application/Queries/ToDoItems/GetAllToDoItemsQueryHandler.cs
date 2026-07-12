@@ -7,11 +7,16 @@ using TestToDo.Interfaces;
 
 namespace TestToDo.Application.Queries.ToDoItems;
 
-public class GetAllToDoItemsQueryHandler(IToDoItemRepository itemRepository, ICurrentUserProvider currentUser) : IRequestHandler<GetAllToDoItemsQuery,  IReadOnlyCollection<ToDoItemDto>>
+public class GetAllToDoItemsQueryHandler(IToDoItemRepository itemRepository, ICurrentUserProvider currentUser)
+    : IRequestHandler<GetAllToDoItemsQuery, IReadOnlyCollection<ToDoItemDto>>
 {
-    public async Task<IReadOnlyCollection<ToDoItemDto>> Handle(GetAllToDoItemsQuery request, CancellationToken cancellationToken)
+    public async Task<IReadOnlyCollection<ToDoItemDto>> Handle(GetAllToDoItemsQuery request,
+        CancellationToken cancellationToken)
     {
-        var i = await itemRepository.GetToDoItemsAsync(currentUser.GetUserId(), cancellationToken);
+        var safePageSize = request.PageSize > 366 ? 366 : request.PageSize;
+        var safePage = request.Page < 1 ? 1 : request.Page;
+        var i = await itemRepository.GetToDoItemsAsync(currentUser.GetUserId(), safePage, safePageSize,
+            cancellationToken);
         return i.ToDtoCollection();
     }
-};
+}

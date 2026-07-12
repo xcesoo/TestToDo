@@ -22,9 +22,9 @@ public class ToDoItemsController(IMediator mediator) : ControllerBase
 
     [HttpGet]
     [Authorize]
-    public async Task<ActionResult<IReadOnlyCollection<ToDoItemDto>>> GetAll(CancellationToken cancellationToken)
+    public async Task<ActionResult<IReadOnlyCollection<ToDoItemDto>>> GetAll([FromQuery] int page, [FromQuery] int pageSize, CancellationToken cancellationToken)
     {
-        var items = await mediator.Send(new GetAllToDoItemsQuery(), cancellationToken);
+        var items = await mediator.Send(new GetAllToDoItemsQuery(page, pageSize), cancellationToken);
         return Ok(items);
     }
     //GET

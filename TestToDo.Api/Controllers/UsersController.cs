@@ -17,14 +17,14 @@ public class UsersController(IMediator mediator) : ControllerBase
         return Ok(user);
     }
     
-    [HttpGet("{userId}")]
+    [HttpGet("{userId:guid}")]
     public async Task<IActionResult> GetById(Guid userId)
     {
         var user = await mediator.Send(new GetUserByIdQuery(userId));
         return user is null ? NotFound() : Ok(user);
     }
     
-    [HttpGet]
+    [HttpGet("/by-email")]
     public async Task<IActionResult> GetByEmail([FromQuery]string email)
     {
         var user = await mediator.Send(new GetUserByEmailQuery(email));
