@@ -1,11 +1,9 @@
-using System.Collections.ObjectModel;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TestToDo.Application.Commands;
 using TestToDo.Application.Commands.Categories;
 using TestToDo.Application.DTOs;
 using TestToDo.Application.Queries.Categories;
-using TestToDo.Entities;
 
 namespace TestToDo.Api.Controllers;
 [ApiController]
@@ -13,7 +11,8 @@ namespace TestToDo.Api.Controllers;
 public class CategoriesController(IMediator mediator) : ControllerBase
 {
     //GET
-    [HttpGet("{id:guid}")]
+    [HttpGet("{id:guid}")] 
+    [Authorize]
     public async Task<ActionResult<CategoryDto>> GetById(Guid id, CancellationToken cancellationToken)
     {
         var ct = await mediator.Send(new GetCategoryByIdQuery(id), cancellationToken);
@@ -21,6 +20,7 @@ public class CategoriesController(IMediator mediator) : ControllerBase
     }
 
     [HttpGet]
+    [Authorize]
     public async Task<ActionResult<IReadOnlyCollection<CategoryDto>>> SearchByName([FromQuery]string nameFilter,
         CancellationToken cancellationToken)
     {
@@ -29,6 +29,7 @@ public class CategoriesController(IMediator mediator) : ControllerBase
     }
 
     [HttpGet("{name}")]
+    [Authorize]
     public async Task<ActionResult<CategoryDto>> SearchByCategory(string name, CancellationToken cancellationToken)
     {
         var ct = await mediator.Send(new GetCategoryByNameQuery(name), cancellationToken);
@@ -38,6 +39,7 @@ public class CategoriesController(IMediator mediator) : ControllerBase
     
     //POST
     [HttpPost]
+    [Authorize]
     public async Task<ActionResult<CategoryDto>> Create(CreateCategoryCommand command,
         CancellationToken cancellationToken)
     {
@@ -48,6 +50,7 @@ public class CategoriesController(IMediator mediator) : ControllerBase
     
     //PATCH
     [HttpPatch("{id:guid}/name")]
+    [Authorize]
     public async Task<IActionResult> ChangeName(Guid id, [FromBody] ChangeNameRequest request, CancellationToken cancellationToken)
     {
         await mediator.Send(new ChangeCategoryNameCommand(id, request.Name), cancellationToken);
@@ -57,6 +60,7 @@ public class CategoriesController(IMediator mediator) : ControllerBase
     
     //DELETE
     [HttpDelete("{id:guid}")]
+    [Authorize]
     public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
     {
         await mediator.Send(new DeleteCategoryCommand(id), cancellationToken);

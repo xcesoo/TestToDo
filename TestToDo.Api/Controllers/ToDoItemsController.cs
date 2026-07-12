@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TestToDo.Application.Commands.ToDoItems;
 using TestToDo.Application.DTOs;
@@ -12,6 +13,7 @@ public class ToDoItemsController(IMediator mediator) : ControllerBase
 {
     //GET
     [HttpGet("{id:guid}")]
+    [Authorize]
     public async Task<ActionResult<ToDoItemDto>> GetById(Guid id, CancellationToken cancellationToken)
     {
         var item = await mediator.Send(new GetToDoItemByIdQuery(id), cancellationToken);
@@ -19,6 +21,7 @@ public class ToDoItemsController(IMediator mediator) : ControllerBase
     }
 
     [HttpGet]
+    [Authorize]
     public async Task<ActionResult<IReadOnlyCollection<ToDoItemDto>>> GetAll(CancellationToken cancellationToken)
     {
         var items = await mediator.Send(new GetAllToDoItemsQuery(), cancellationToken);
@@ -28,6 +31,7 @@ public class ToDoItemsController(IMediator mediator) : ControllerBase
 
     //POST
     [HttpPost]
+    [Authorize]
     public async Task<ActionResult<ToDoItemDto>> Create([FromBody] CreateToDoItemCommand command,  CancellationToken cancellationToken)
     {
         var item = await mediator.Send(command, cancellationToken);
@@ -37,6 +41,7 @@ public class ToDoItemsController(IMediator mediator) : ControllerBase
     
     //PATCH
     [HttpPatch("{id:guid}/title")]
+    [Authorize]
     public async Task<IActionResult> ChangeTitle(Guid id, [FromBody]ChangeTitleRequest request, CancellationToken cancellationToken)
     {
         await mediator.Send(new ChangeTitleToDoItemCommand(id, request.Title), cancellationToken);
@@ -44,6 +49,7 @@ public class ToDoItemsController(IMediator mediator) : ControllerBase
     }
     
     [HttpPatch("{id:guid}/description")]
+    [Authorize]
     public async Task<IActionResult> ChangeDescription(Guid id, [FromBody]ChangeDescriptionRequest request, CancellationToken cancellationToken)
     {
         await mediator.Send(new ChangeDescriptionToDoItemCommand(id, request.Description), cancellationToken);
@@ -51,6 +57,7 @@ public class ToDoItemsController(IMediator mediator) : ControllerBase
     }
     
     [HttpPatch("{id:guid}/category/{categoryId:guid}")]
+    [Authorize]
     public async Task<IActionResult> ChangeCategory(Guid id, Guid categoryId, CancellationToken cancellationToken)
     {
         await mediator.Send(new ChangeCategoryToDoItemCommand(id, categoryId), cancellationToken);
@@ -58,6 +65,7 @@ public class ToDoItemsController(IMediator mediator) : ControllerBase
     }
     
     [HttpPatch("{id:guid}/category/default")]
+    [Authorize]
     public async Task<IActionResult> ChangeCategory(Guid id, CancellationToken cancellationToken)
     {
         await mediator.Send(new ChangeCategoryToDoItemCommand(id, Guid.Empty), cancellationToken);
@@ -65,6 +73,7 @@ public class ToDoItemsController(IMediator mediator) : ControllerBase
     }
     
     [HttpPatch("{id:guid}/priority")]
+    [Authorize]
     public async Task<IActionResult> ChangePriority(Guid id, [FromBody] ChangePriorityRequest request, CancellationToken cancellationToken)
     {
         await mediator.Send(new ChangePriorityToDoItemCommand(id, request.Priority), cancellationToken);
@@ -72,6 +81,7 @@ public class ToDoItemsController(IMediator mediator) : ControllerBase
     }
     
     [HttpPatch("{id:guid}/deadline")]
+    [Authorize]
     public async Task<IActionResult> ChangeDeadline(Guid id, [FromBody] ChangeDeadlineRequest request, CancellationToken cancellationToken)
     {
         await mediator.Send(new ChangeDeadlineToDoItemCommand(id, request.Deadline), cancellationToken);
@@ -79,6 +89,7 @@ public class ToDoItemsController(IMediator mediator) : ControllerBase
     }
     
     [HttpPatch("{id:guid}/complete")]
+    [Authorize]
     public async Task<IActionResult> Complete(Guid id, CancellationToken cancellationToken)
     {
         await mediator.Send(new CompleteToDoItemCommand(id), cancellationToken);
@@ -86,6 +97,7 @@ public class ToDoItemsController(IMediator mediator) : ControllerBase
     }
     
     [HttpPatch("{id:guid}/reopen")]
+    [Authorize]
     public async Task<IActionResult> Reopen(Guid id, CancellationToken cancellationToken)
     {
         await mediator.Send(new ReopenToDoItemCommand(id), cancellationToken);
@@ -95,6 +107,7 @@ public class ToDoItemsController(IMediator mediator) : ControllerBase
     
     //DELETE
     [HttpDelete("{id:guid}")]
+    [Authorize]
     public async Task<ActionResult> Delete(Guid id, CancellationToken cancellationToken)
     {
         await mediator.Send(new DeleteToDoItemCommand(id), cancellationToken);
