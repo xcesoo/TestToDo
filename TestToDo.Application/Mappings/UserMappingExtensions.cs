@@ -16,7 +16,7 @@ public static class UserMappingExtensions
         );
     }
 
-    public static IReadOnlyCollection<UserDto> ToEntity(this IEnumerable<User> users)
+    public static IReadOnlyCollection<UserDto> ToDtoCollection(this IEnumerable<User> users)
     {
         return users.Select(c => c.ToDto()).ToArray();
     }
