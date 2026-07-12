@@ -26,6 +26,12 @@ public class GlobalExceptionsHandler(ILogger<GlobalExceptionsHandler> logger) : 
                 problemDetails.Detail = exception.Message;
                 break;
             
+            case UnauthorizedAccessException:
+                problemDetails.Status = StatusCodes.Status401Unauthorized;
+                problemDetails.Title = "Unauthorized";
+                problemDetails.Detail = exception.Message;
+                break;
+            
             default:
                 problemDetails.Status = StatusCodes.Status500InternalServerError;
                 problemDetails.Title = "Internal server error";
