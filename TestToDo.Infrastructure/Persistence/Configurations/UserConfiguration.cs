@@ -29,7 +29,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.Property(c => c.PasswordHash)
             .IsRequired()
-            .HasColumnName("password_hash");;
+            .HasColumnName("password_hash");
 
         builder.Property(c => c.CreatedAt)
             .IsRequired()

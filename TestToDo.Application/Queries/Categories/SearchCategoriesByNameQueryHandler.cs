@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using MediatR;
 using TestToDo.Application.DTOs;
 using TestToDo.Application.Interfaces;

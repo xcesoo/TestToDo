@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TestToDo.Application.Extensions;
 using TestToDo.Entities;
-using TestToDo.Enums;
 using TestToDo.Filters;
 using TestToDo.Infrastructure.Persistence;
 using TestToDo.Interfaces;
