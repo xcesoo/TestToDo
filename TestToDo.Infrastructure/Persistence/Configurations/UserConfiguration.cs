@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TestToDo.Entities;
+using TestToDo.ValueObjects;
 
 namespace TestToDo.Infrastructure.Persistence.Configurations;
 
@@ -14,13 +15,18 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(c => c.Id)
             .ValueGeneratedNever()
             .HasColumnName("id");
-
-        builder.HasIndex(c => c.Email)
-            .IsUnique();
+        
         builder.Property(c => c.Email)
+            .HasConversion(
+                email => email.Value,
+                value => new Email(value)
+            )
             .HasMaxLength(256)
             .IsRequired()
             .HasColumnName("email");
+
+        builder.HasIndex(c => c.Email)
+            .IsUnique();
         
         builder.Property(c => c.Name)
             .HasMaxLength(100)
