@@ -14,13 +14,7 @@ public class SearchToDoItemsQueryHandler(IToDoItemRepository itemRepository, ICu
         var safePage = request.Page < 1 ? 1 : request.Page;
         var items = await itemRepository.SearchToDoItemsAsync(
             currentUser.GetUserId(),
-            request.SearchTerm,
-            request.CategoryId,
-            request.Priority,
-            request.startDateCreated, request.endDateCreated,
-            request.startDateDeadline, request.endDateDeadline,
-            request.startDateCompleted, request.endDateCompleted,
-            request.completed,
+            request.Filter,
             safePage, safePageSize, 
             cancellationToken);
         return items.ToDtoCollection();

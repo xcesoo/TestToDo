@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using TestToDo.Application.Extensions;
 using TestToDo.Entities;
 using TestToDo.Enums;
+using TestToDo.Filters;
 using TestToDo.Infrastructure.Persistence;
 using TestToDo.Interfaces;
 
@@ -29,36 +30,30 @@ public class ToDoItemRepository : IToDoItemRepository
 
     public async Task<IReadOnlyCollection<ToDoItem>> SearchToDoItemsAsync(
         Guid userId,
-        string? searchTerm, 
-        Guid? categoryId,
-        EPriority[]? priority,
-        DateTime? startDateCreated, DateTime? endDateCreated,
-        DateTime? startDateDeadline, DateTime? endDateDeadline,
-        DateTime? startDateCompleted, DateTime? endDateCompleted,
-        bool? completed,
+        ToDoItemSearchFilter filter,
         int page, int pageSize, CancellationToken cancellationToken)
     {
         return await _context.ToDoItems.AsNoTracking()
             .Where(i => i.UserId == userId)
             
-            .WhereIf(!string.IsNullOrWhiteSpace(searchTerm), i => 
-                EF.Functions.ILike(i.Title, $"%{searchTerm}%")
-                || (i.Description != null  && EF.Functions.ILike(i.Description, $"%{searchTerm}%")))
+            .WhereIf(!string.IsNullOrWhiteSpace(filter.SearchTerm), i => 
+                EF.Functions.ILike(i.Title, $"%{filter.SearchTerm}%")
+                || (i.Description != null  && EF.Functions.ILike(i.Description, $"%{filter.SearchTerm}%")))
             
-            .WhereIf(categoryId is not null, i => i.CategoryId == categoryId)
+            .WhereIf(filter.CategoryId is not null, i => i.CategoryId == filter.CategoryId)
             
-            .WhereIf(priority is not null && priority.Any(), i => priority!.Contains(i.Priority))
+            .WhereIf(filter.Priority is not null && filter.Priority.Any(), i => filter.Priority!.Contains(i.Priority))
             
-            .WhereIf(startDateCreated is not null, i => i.CreatedAt >= startDateCreated)
-            .WhereIf(endDateCreated is not null, i => i.CreatedAt <= endDateCreated)
+            .WhereIf(filter.StartDateCreated is not null, i => i.CreatedAt >= filter.StartDateCreated)
+            .WhereIf(filter.EndDateCreated is not null, i => i.CreatedAt <= filter.EndDateCreated)
             
-            .WhereIf(startDateDeadline is not null, i => i.Deadline >= startDateDeadline)
-            .WhereIf(endDateDeadline is not null, i => i.Deadline <= endDateDeadline)
+            .WhereIf(filter.StartDateDeadline is not null, i => i.Deadline >= filter.StartDateDeadline)
+            .WhereIf(filter.EndDateDeadline is not null, i => i.Deadline <= filter.EndDateDeadline)
             
-            .WhereIf(startDateCompleted is not null, i => i.CompletedAt >= startDateCompleted)
-            .WhereIf(endDateCompleted is not null, i => i.CompletedAt <= endDateCompleted)
+            .WhereIf(filter.StartDateCompleted is not null, i => i.CompletedAt >= filter.StartDateCompleted)
+            .WhereIf(filter.EndDateCompleted is not null, i => i.CompletedAt <= filter.EndDateCompleted)
             
-            .WhereIf(completed is not null, i => i.IsCompleted == completed)
+            .WhereIf(filter.Completed is not null, i => i.IsCompleted == filter.Completed)
             
             .OrderBy(i => i.CreatedAt)
             .Skip((page - 1) * pageSize)

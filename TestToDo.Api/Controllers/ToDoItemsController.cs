@@ -5,6 +5,7 @@ using TestToDo.Application.Commands.ToDoItems;
 using TestToDo.Application.DTOs;
 using TestToDo.Application.Queries.ToDoItems;
 using TestToDo.Enums;
+using TestToDo.Filters;
 
 namespace TestToDo.Api.Controllers;
 [ApiController]
@@ -32,16 +33,21 @@ public class ToDoItemsController(IMediator mediator) : ControllerBase
     [Authorize]
     public async Task<ActionResult<IReadOnlyCollection<ToDoItemDto>>> Search([FromQuery] SearchToDoItemsRequest request, CancellationToken cancellationToken)
     {
+        var filter = new ToDoItemSearchFilter
+        (
+            SearchTerm: request.SearchTerm,
+            CategoryId: request.CategoryId,
+            StartDateCreated: request.StartDateCreated,
+            EndDateCreated: request.EndDateCreated,
+            StartDateDeadline: request.StartDateDeadline,
+            EndDateDeadline: request.EndDateDeadline,
+            StartDateCompleted: request.StartDateCompleted,
+            EndDateCompleted: request.EndDateCompleted,
+            Priority: request.Priority,
+            Completed: request.Completed
+        );
         var items = await mediator.Send(
-            new SearchToDoItemsQuery(
-                request.SearchTerm,
-                request.CategoryId,
-                request.Priority,
-                request.startDateCreated, request.endDateCreated,
-                request.startDateDeadline, request.endDateDeadline,
-                request.startDateCompleted, request.endDateCompleted,
-                request.completed,
-                request.Page, request.PageSize),
+            new SearchToDoItemsQuery(filter, request.Page, request.PageSize), 
             cancellationToken);
         return Ok(items);
     }
@@ -143,9 +149,9 @@ public readonly record struct SearchToDoItemsRequest(
     string? SearchTerm, 
     Guid? CategoryId,
     EPriority[]? Priority,
-    DateTime? startDateCreated, DateTime? endDateCreated,
-    DateTime? startDateDeadline, DateTime? endDateDeadline,
-    DateTime? startDateCompleted, DateTime? endDateCompleted,
-    bool? completed,
+    DateTime? StartDateCreated, DateTime? EndDateCreated,
+    DateTime? StartDateDeadline, DateTime? EndDateDeadline,
+    DateTime? StartDateCompleted, DateTime? EndDateCompleted,
+    bool? Completed,
     int Page, int PageSize);
 //REQUESTS RECORDS
