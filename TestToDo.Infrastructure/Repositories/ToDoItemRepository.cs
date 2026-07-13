@@ -16,17 +16,6 @@ public class ToDoItemRepository : IToDoItemRepository
         _context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
-    public async Task<IReadOnlyCollection<ToDoItem>> GetToDoItemsAsync(Guid userId, int page, int pageSize,
-        CancellationToken cancellationToken)
-    {
-        return await _context.ToDoItems.AsNoTracking()
-            .Where(i => i.UserId == userId)
-            .OrderBy(i => i.CreatedAt)
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync(cancellationToken);
-    }
-
     public async Task<IReadOnlyCollection<ToDoItem>> SearchToDoItemsAsync(
         Guid userId,
         ToDoItemSearchFilter filter,

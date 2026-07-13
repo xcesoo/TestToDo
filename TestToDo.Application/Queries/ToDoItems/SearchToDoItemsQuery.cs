@@ -7,4 +7,4 @@ namespace TestToDo.Application.Queries.ToDoItems;
 
 public readonly record struct SearchToDoItemsQuery(
     ToDoItemSearchFilter Filter,
-    int Page, int PageSize) : IRequest<IReadOnlyCollection<ToDoItemDto>>;
+    PaginationFilter Pagination) : IRequest<IReadOnlyCollection<ToDoItemDto>>;

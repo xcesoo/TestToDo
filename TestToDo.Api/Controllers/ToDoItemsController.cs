@@ -20,16 +20,8 @@ public class ToDoItemsController(IMediator mediator) : ControllerBase
         var item = await mediator.Send(new GetToDoItemByIdQuery(id), cancellationToken);
         return item is null ? NotFound() : Ok(item);
     }
-
-    [HttpGet]
-    [Authorize]
-    public async Task<ActionResult<IReadOnlyCollection<ToDoItemDto>>> GetAll([FromQuery] int page, [FromQuery] int pageSize, CancellationToken cancellationToken)
-    {
-        var items = await mediator.Send(new GetAllToDoItemsQuery(page, pageSize), cancellationToken);
-        return Ok(items);
-    }
     
-    [HttpGet("search")]
+    [HttpGet]
     [Authorize]
     public async Task<ActionResult<IReadOnlyCollection<ToDoItemDto>>> Search([FromQuery] SearchToDoItemsRequest request, CancellationToken cancellationToken)
     {
@@ -46,8 +38,14 @@ public class ToDoItemsController(IMediator mediator) : ControllerBase
             Priority: request.Priority,
             Completed: request.Completed
         );
+        
+        var pagination = new PaginationFilter(
+            page: request.Page,
+            pageSize: request.PageSize);
+        
+        
         var items = await mediator.Send(
-            new SearchToDoItemsQuery(filter, request.Page, request.PageSize), 
+            new SearchToDoItemsQuery(filter, pagination), 
             cancellationToken);
         return Ok(items);
     }

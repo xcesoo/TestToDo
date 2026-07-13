@@ -5,7 +5,6 @@ namespace TestToDo.Interfaces;
 
 public interface IToDoItemRepository
 {
-    Task<IReadOnlyCollection<ToDoItem>> GetToDoItemsAsync(Guid userId, int page, int pageSize, CancellationToken cancellationToken);
     Task<IReadOnlyCollection<ToDoItem>> SearchToDoItemsAsync(
         Guid userId,
         ToDoItemSearchFilter filter,

@@ -10,12 +10,10 @@ public class SearchToDoItemsQueryHandler(IToDoItemRepository itemRepository, ICu
 {
     public async Task<IReadOnlyCollection<ToDoItemDto>> Handle(SearchToDoItemsQuery request, CancellationToken cancellationToken)
     {
-        var safePageSize = request.PageSize > 366 ? 366 : request.PageSize;
-        var safePage = request.Page < 1 ? 1 : request.Page;
         var items = await itemRepository.SearchToDoItemsAsync(
             currentUser.GetUserId(),
             request.Filter,
-            safePage, safePageSize, 
+            request.Pagination.Page, request.Pagination.PageSize, 
             cancellationToken);
         return items.ToDtoCollection();
     }
