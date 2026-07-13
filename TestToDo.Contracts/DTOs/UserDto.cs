@@ -1,4 +1,4 @@
-namespace TestToDo.Application.DTOs;
+namespace TestToDo.Contracts.DTOs;
 
 public record UserDto(
     Guid Id,

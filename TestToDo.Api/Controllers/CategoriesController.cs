@@ -2,8 +2,9 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TestToDo.Application.Commands.Categories;
-using TestToDo.Application.DTOs;
 using TestToDo.Application.Queries.Categories;
+using TestToDo.Contracts.DTOs;
+using TestToDo.Contracts.Requests;
 
 namespace TestToDo.Api.Controllers;
 [ApiController]
@@ -68,6 +69,3 @@ public class CategoriesController(IMediator mediator) : ControllerBase
     }
     //DELETE
 }
-//REQUESTS RECORDS //todo change location to contracts
-public readonly record struct ChangeNameRequest(string Name);
-//REQUESTS RECORDS

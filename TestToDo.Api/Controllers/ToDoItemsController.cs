@@ -2,9 +2,9 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TestToDo.Application.Commands.ToDoItems;
-using TestToDo.Application.DTOs;
 using TestToDo.Application.Queries.ToDoItems;
-using TestToDo.Enums;
+using TestToDo.Contracts.DTOs;
+using TestToDo.Contracts.Requests;
 using TestToDo.Filters;
 
 namespace TestToDo.Api.Controllers;
@@ -137,19 +137,3 @@ public class ToDoItemsController(IMediator mediator) : ControllerBase
     }
     //DELETE
 }
-
-//REQUESTS RECORDS //todo change location to contracts
-public readonly record struct ChangeTitleRequest(string Title);
-public readonly record struct ChangeDescriptionRequest(string Description);
-public readonly record struct ChangePriorityRequest(EPriority Priority);
-public readonly record struct ChangeDeadlineRequest(DateTime Deadline);
-public readonly record struct SearchToDoItemsRequest(
-    string? SearchTerm, 
-    Guid? CategoryId,
-    EPriority[]? Priority,
-    DateTime? StartDateCreated, DateTime? EndDateCreated,
-    DateTime? StartDateDeadline, DateTime? EndDateDeadline,
-    DateTime? StartDateCompleted, DateTime? EndDateCompleted,
-    bool? Completed,
-    int Page, int PageSize);
-//REQUESTS RECORDS

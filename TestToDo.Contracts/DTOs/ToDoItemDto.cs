@@ -1,6 +1,6 @@
 using TestToDo.Enums;
 
-namespace TestToDo.Application.DTOs;
+namespace TestToDo.Contracts.DTOs;
 
 public record ToDoItemDto(
     Guid Id,

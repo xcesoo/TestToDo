@@ -1,4 +1,4 @@
-using TestToDo.Application.DTOs;
+using TestToDo.Contracts.DTOs;
 using TestToDo.Entities;
 
 namespace TestToDo.Application.Extensions;

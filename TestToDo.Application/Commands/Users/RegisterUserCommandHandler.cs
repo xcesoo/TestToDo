@@ -1,6 +1,6 @@
 using MediatR;
-using TestToDo.Application.DTOs;
 using TestToDo.Application.Interfaces;
+using TestToDo.Contracts.DTOs;
 using TestToDo.Entities;
 using TestToDo.Interfaces;
 

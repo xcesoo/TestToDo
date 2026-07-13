@@ -1,7 +1,7 @@
 using MediatR;
-using TestToDo.Application.DTOs;
 using TestToDo.Application.Interfaces;
 using TestToDo.Application.Extensions;
+using TestToDo.Contracts.DTOs;
 using TestToDo.Entities;
 using TestToDo.Enums;
 using TestToDo.Interfaces;

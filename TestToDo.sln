@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestToDo.Application", "Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestToDo.Infrastructure", "TestToDo.Infrastructure\TestToDo.Infrastructure.csproj", "{B270224C-BD46-41EA-8E4E-13592DF21F5F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestToDo.Contracts", "TestToDo.Contracts\TestToDo.Contracts.csproj", "{E7B388AC-AE74-4F3E-A0CB-F58303645296}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,5 +37,9 @@ Global
 		{B270224C-BD46-41EA-8E4E-13592DF21F5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B270224C-BD46-41EA-8E4E-13592DF21F5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B270224C-BD46-41EA-8E4E-13592DF21F5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7B388AC-AE74-4F3E-A0CB-F58303645296}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7B388AC-AE74-4F3E-A0CB-F58303645296}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7B388AC-AE74-4F3E-A0CB-F58303645296}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7B388AC-AE74-4F3E-A0CB-F58303645296}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

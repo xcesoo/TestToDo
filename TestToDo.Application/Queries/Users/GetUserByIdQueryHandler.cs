@@ -1,6 +1,6 @@
 using MediatR;
-using TestToDo.Application.DTOs;
 using TestToDo.Application.Extensions;
+using TestToDo.Contracts.DTOs;
 using TestToDo.Interfaces;
 
 namespace TestToDo.Application.Queries.Users;

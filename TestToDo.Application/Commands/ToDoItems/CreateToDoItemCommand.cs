@@ -1,5 +1,5 @@
 using MediatR;
-using TestToDo.Application.DTOs;
+using TestToDo.Contracts.DTOs;
 using TestToDo.Enums;
 
 namespace TestToDo.Application.Commands.ToDoItems;
