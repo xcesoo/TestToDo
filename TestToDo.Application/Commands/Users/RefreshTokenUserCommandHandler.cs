@@ -19,7 +19,7 @@ public class RefreshTokenUserCommandHandler(IUserRepository userRepository, IJwt
         
         var token = new TokenResponseDto(jwtProvider.GenerateAccessJwtToken(user), jwtProvider.GenerateRefreshJwtToken(user));
         user.RevokeRefreshToken(request.RefreshToken);
-        user.AddRefreshToken(token.RefreshToken);
+        user.AddRefreshToken(token.RefreshToken, jwtProvider.GetExpiryRefreshTokenDate());
         await userRepository.SaveChangesAsync(cancellationToken);
         return token;
     }

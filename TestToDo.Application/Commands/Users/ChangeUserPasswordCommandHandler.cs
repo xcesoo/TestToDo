@@ -19,7 +19,7 @@ public class ChangeUserPasswordCommandHandler(
         user.ChangePasswordHash(passwordHasher.Hash(request.NewPassword));
         var token = new TokenResponseDto(jwtProvider.GenerateAccessJwtToken(user), jwtProvider.GenerateRefreshJwtToken(user));
         user.RevokeAllRefreshTokens();
-        user.AddRefreshToken(token.RefreshToken);
+        user.AddRefreshToken(token.RefreshToken, jwtProvider.GetExpiryRefreshTokenDate());
         await userRepository.SaveChangesAsync(cancellationToken);
         return token;
     }

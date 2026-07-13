@@ -6,4 +6,5 @@ public interface IJwtProvider
 {
     string GenerateAccessJwtToken(User user);
     string GenerateRefreshJwtToken(User user);
+    DateTime GetExpiryRefreshTokenDate();
 }

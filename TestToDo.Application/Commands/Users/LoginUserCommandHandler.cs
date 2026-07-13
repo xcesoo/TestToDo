@@ -16,7 +16,7 @@ public class LoginUserCommandHandler(IUserRepository userRepository, IPasswordHa
         var token = new TokenResponseDto(
             jwtProvider.GenerateAccessJwtToken(user),
             jwtProvider.GenerateRefreshJwtToken(user));
-        user.AddRefreshToken(token.RefreshToken);
+        user.AddRefreshToken(token.RefreshToken, jwtProvider.GetExpiryRefreshTokenDate());
         await userRepository.SaveChangesAsync(cancellationToken);
         return token;
     }

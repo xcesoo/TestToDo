@@ -17,7 +17,7 @@ public partial class User
         };
     }
 
-    public void AddRefreshToken(string token)
+    public void AddRefreshToken(string token, DateTime expiryDate)
     {
         _refreshTokens.RemoveAll(t => !t.IsActive);
         if (_refreshTokens.Count >= 5)
@@ -26,7 +26,7 @@ public partial class User
             _refreshTokens.Remove(oldest);
         }
 
-        _refreshTokens.Add(RefreshToken.Create(token, Id));
+        _refreshTokens.Add(RefreshToken.Create(token, Id, expiryDate));
 }
 
     public void RevokeRefreshToken(string refreshToken)
