@@ -11,14 +11,15 @@ namespace TestToDo.Infrastructure.Auth;
 
 public class JwtProvider : IJwtProvider
 {
-    private readonly JwtSettings _jwtSettings;
-    public JwtProvider(IOptions<JwtSettings> jwtSettings)
+    private readonly IOptionsMonitor<JwtSettings> _jwtSettings;
+    public JwtProvider(IOptionsMonitor<JwtSettings> jwtSettings)
     {
-        _jwtSettings = jwtSettings.Value;
+        _jwtSettings = jwtSettings;
     }
     
     public string GenerateAccessJwtToken(User user)
     {
+        var settings = _jwtSettings.CurrentValue;
         var claims = new[]
         {
             new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
@@ -26,13 +27,13 @@ public class JwtProvider : IJwtProvider
             new Claim(JwtRegisteredClaimNames.Name, user.Name)
         };
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.Secret));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-        var expires = DateTime.UtcNow.AddMinutes(_jwtSettings.AccessTokenExpirationTimeInMinutes);
+        var expires = DateTime.UtcNow.AddMinutes(settings.AccessTokenExpirationTimeInMinutes);
 
         var token = new JwtSecurityToken(
-            issuer: _jwtSettings.Issuer,
-            audience: _jwtSettings.Audience,
+            issuer: settings.Issuer,
+            audience: settings.Audience,
             expires: expires,
             claims: claims,
             signingCredentials: creds
@@ -51,6 +52,7 @@ public class JwtProvider : IJwtProvider
 
     public DateTime GetExpiryRefreshTokenDate()
     {
-        return DateTime.UtcNow.AddDays(_jwtSettings.RefreshTokenExpirationTimeInDays);
+        var settings = _jwtSettings.CurrentValue;
+        return DateTime.UtcNow.AddDays(settings.RefreshTokenExpirationTimeInDays);
     }
 }
